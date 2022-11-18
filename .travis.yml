@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - '19'
+  - '14'
 
 notifications:
   slack: thefortesting:LDvOuBBnMJGVBe4muJ4tXpxZ
