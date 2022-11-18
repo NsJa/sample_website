@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+  - "stable"
+notifications:
+  slack: thefortesting:LDvOuBBnMJGVBe4muJ4tXpxZ
+cache:
+  directories:
+    - node_modules
+before_script:
+  - yarn install --frozen-lockfile
+script:
+  - yarn run build
