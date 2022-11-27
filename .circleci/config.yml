@@ -21,12 +21,12 @@ jobs:
             npm run build
             npm run deploy
       # Notify
-      - run:
-        when: pass
-        command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
-      - run:
-        when: fail
-        command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_FAIL
+      # - run:
+      #   when: pass
+      #   command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
+      # - run:
+      #   when: fail
+      #   command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_FAIL
 
 workflows:
   Deploy_to_Github_Page:
