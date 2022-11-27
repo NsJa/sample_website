@@ -13,8 +13,7 @@ jobs:
             - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
       - checkout
       - run:
-        command: |
-          curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
+        command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
       # - run:
       #     name: "Deploy"
       #     command: |
