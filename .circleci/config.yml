@@ -4,6 +4,30 @@ orbs:
   node: circleci/node@4.7
   slack: circleci/slack@4.10.1
 
+jobs:
+  deploy:
+    docker:
+      - image: circleci/node
+    steps:
+      - add_ssh_keys:
+        fingerprints:
+          - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
+      - checkout
+      - node/install-packages
+      - run:
+          command: |
+            git config --global user.email "$GITHUB_EMAIL"
+            git config --global user.name "$GITHUB_NAME"
+            npm run test
+            npm run build
+            npm run deploy
+      - slack/notify:
+          event: fail
+          template: fail_tagged_deploy
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy
+
 workflows:
   deploy_and_notify:
     jobs:
@@ -11,19 +35,3 @@ workflows:
           context:
             - slack-templates
             - github
-
-jobs:
-  deploy:
-    docker:
-      - image: circleci/node
-    steps:
-      - checkout
-      - node/install-packages
-      - run: npm run test
-      - run: npm run build
-      - run: git config --global user.email "$GITHUB_EMAIL"
-      - run: git config --global user.name "$GITHUB_NAME"
-      - run: npm run deploy
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy
