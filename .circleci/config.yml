@@ -12,24 +12,22 @@ jobs:
           fingerprints:
             - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
       - checkout
-      - node/install-packages
-      # - run: npm run test
       - run:
-          when: always
           name: "Deploy"
           command: |
             git config --global user.email "$GITHUB_EMAIL"
             git config --global user.name "$GITHUB_NAME"
+            npm install
             npm run build
             npm run deploy
       # Notify
       - run:
         when: pass
-        command: |
+        command: >
           curl -X POST $Slack_API -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
       - run:
         when: fail
-        command: |
+        command: >
           curl -X POST $Slack_API -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
 
 workflows:
