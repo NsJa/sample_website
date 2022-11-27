@@ -22,11 +22,9 @@ jobs:
           event: pass
           template: success_tagged_deploy
 workflows:
-  test_and_notify:
+  deploy_and_notify:
     jobs:
       - test:
           context: slack-templates
-  deploy_and_notify:
-    jobs:
       - deploy:
           context: slack-templates
