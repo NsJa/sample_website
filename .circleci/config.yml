@@ -24,13 +24,13 @@ jobs:
             npm run deploy
       # Notify
       - run:
-        when: on_success
+        when: pass
         command: |
-          curl -X POST "$Slack_API" -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
+          curl -X POST $Slack_API -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
       - run:
-        when: on_fail
+        when: fail
         command: |
-          curl -X POST "$Slack_API" -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
+          curl -X POST $Slack_API -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
 
 workflows:
   Deploy_to_Github_Page:
