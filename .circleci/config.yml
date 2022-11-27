@@ -23,12 +23,10 @@ jobs:
 
       - run:
         name: "Notify"
-        command: curl -X POST $SLACK_API
-        when: on_success
-        # command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
-      # - run:
-      #   when: fail
-      #   command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_FAIL
+        command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
+      - run:
+        name: "Notify"
+        command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_FAIL
 
 workflows:
   Deploy_to_Github_Page:
