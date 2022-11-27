@@ -24,13 +24,11 @@ jobs:
       - run:
         when: pass
         command: |
-          echo {\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]} > /tmp/payload.json
-          curl -X POST "$Slack_API" -H "Content-Type: application/json" -d @/tmp/payload.json
+          curl -X POST "$SLACK_API" -H "Content-Type: application/json" -d $SLACK_SUCCESS
       - run:
         when: fail
         command: |
-          echo {\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]} > /tmp/payload.json
-          curl -X POST "$Slack_API" -H "Content-Type: application/json" -d @/tmp/payload.json
+          curl -X POST "$SLACK_API" -H "Content-Type: application/json" -d $SLACK_FAIL
 
 workflows:
   Deploy_to_Github_Page:
