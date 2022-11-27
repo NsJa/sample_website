@@ -8,6 +8,7 @@ jobs:
       - image: circleci/node
     steps:
       - checkout
+      - node/install-packages
       - run: npm run test
       - slack/notify:
           event: pass
