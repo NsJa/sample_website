@@ -26,11 +26,11 @@ jobs:
       - run:
         when: on_success
         command: |
-          curl -X POST "https://hooks.slack.com/services/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" -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
+          curl -X POST "$Slack_API" -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
       - run:
         when: on_fail
         command: |
-          curl -X POST "https://hooks.slack.com/services/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" -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
+          curl -X POST "$Slack_API" -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
 
 workflows:
   Deploy_to_Github_Page:
