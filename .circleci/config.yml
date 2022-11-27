@@ -1,11 +1,11 @@
 version: 2.1
 orbs:
-  slack: circleci/slack@4.10.1
   node: circleci/node@4.7
+  slack: circleci/slack@4.10.1
 jobs:
   notify:
     docker:
-      - image: 'cimg/base:stable'
+      - image: "cimg/base:stable"
     steps:
       - slack/notify:
           custom: |
@@ -25,13 +25,12 @@ jobs:
             }
           event: always
 workflows:
-  send-notification:
-    jobs:
-      - notify:
-          context: slack-secrets
-workflows:
   test:
     jobs:
       - node/test:
           version: "16.10"
           pkg-manager: yarn
+  send-notification:
+    jobs:
+      - notify:
+          context: slack-secrets
