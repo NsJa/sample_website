@@ -7,8 +7,8 @@ jobs:
     docker:
       - image: circleci/node
     steps:
-      - run:
-          command: npm run test
+      - checkout
+      - run: npm run test
       - slack/notify:
           event: pass
           template: success_tagged_test
