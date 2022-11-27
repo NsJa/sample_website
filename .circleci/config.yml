@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.7
-  slack: circleci/slack@4.10.1
+  webhook: eddiewebb/webhook@0.0.4
 
 jobs:
   deploy:
@@ -22,6 +22,15 @@ jobs:
             git config --global user.email "$GITHUB_EMAIL"
             git config --global user.name "$GITHUB_NAME"
             npm run deploy
+      # Notify
+      - run:
+        when: on_success
+        command: >
+          curl--request POST 'https://hooks.slack.com/services/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' -H  'Content-Type: application/json' -d '{"username": "CircleCI","attachments": [{ "color": "#36a64f", "text": "Success"}]}'
+      - run:
+        when: on_fail
+        command: >
+          curl--request POST 'https://hooks.slack.com/services/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' -H  'Content-Type: application/json' -d '{"username": "CircleCI","attachments": [{ "color": "#ff0000", "text": "Fail"}]}'
 
 workflows:
   Deploy_to_Github_Page:
