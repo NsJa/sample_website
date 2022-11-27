@@ -20,11 +20,11 @@ jobs:
             npm install
             npm run build
             npm run deploy
-      
+
       - run:
         name: "Notify"
         command: curl -X POST $SLACK_API
-        when: pass
+        when: on_success
         # command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
       # - run:
       #   when: fail
