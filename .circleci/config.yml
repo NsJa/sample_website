@@ -13,8 +13,20 @@ jobs:
       - slack/notify:
           event: pass
           template: success_tagged_test
+  deploy:
+    docker:
+      - image: circleci/node
+    steps:
+      - run: npm run deploy
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy
 workflows:
   test_and_notify:
     jobs:
       - test:
+          context: slack-templates
+  deploy_and_notify:
+    jobs:
+      - deploy:
           context: slack-templates
