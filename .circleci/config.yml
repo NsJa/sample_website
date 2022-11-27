@@ -5,30 +5,15 @@ orbs:
 jobs:
   test_success_notify:
     docker:
-      - image: "cimg/base:stable"
+      - image: circleci/node
     steps:
+      - run:
+        command: npm run test
       - slack/notify:
           event: pass
           template: success_tagged_test
-  deploy_success_notify:
-    docker:
-      - image: "cimg/base:stable"
-    steps:
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy
 workflows:
   test_and_notify:
     jobs:
-      - node/test:
-          version: "16.10"
-          pkg-manager: yarn
       - test_success_notify:
-          context: slack-templates
-  deploy_and_notify:
-    jobs:
-      - node/test:
-          version: "16.10"
-          pkg-manager: yarn
-      - deploy_success_notify:
           context: slack-templates
