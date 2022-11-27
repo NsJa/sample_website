@@ -13,7 +13,9 @@ jobs:
             - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
       - checkout
       - node/install-packages
+      # - run: npm run test
       - run:
+          when: always
           name: "Deploy"
           command: |
             git config --global user.email "$GITHUB_EMAIL"
@@ -23,11 +25,11 @@ jobs:
       # Notify
       - run:
         when: on_success
-        command: >
+        command: |
           curl -X POST '$SLACK_API' -H  'Content-Type: application/json' -d '{"username": "CircleCI","attachments": [{ "color": "#36a64f", "text": "Success"}]}'
       - run:
         when: on_fail
-        command: >
+        command: |
           curl -X POST '$SLACK_API' -H  'Content-Type: application/json' -d '{"username": "CircleCI","attachments": [{ "color": "#ff0000", "text": "Fail"}]}'
 
 workflows:
