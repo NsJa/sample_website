@@ -3,20 +3,13 @@ orbs:
   node: circleci/node@4.7
   slack: circleci/slack@4.10.1
 jobs:
-  test:
+  deploy:
     docker:
       - image: circleci/node
     steps:
       - checkout
       - node/install-packages
       - run: npm run test
-      - slack/notify:
-          event: pass
-          template: success_tagged_test
-  deploy:
-    docker:
-      - image: circleci/node
-    steps:
       - run: npm run deploy
       - slack/notify:
           event: pass
@@ -24,7 +17,5 @@ jobs:
 workflows:
   deploy_and_notify:
     jobs:
-      - test:
-          context: slack-templates
       - deploy:
           context: slack-templates
