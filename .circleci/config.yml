@@ -2,7 +2,6 @@ version: 2.1
 
 orbs:
   node: circleci/node@4.7
-  webhook: eddiewebb/webhook@0.0.4
 
 jobs:
   deploy:
@@ -14,28 +13,27 @@ jobs:
             - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
       - checkout
       - node/install-packages
-      # - run: npm run test
-      - run: npm run build
       - run:
           name: "Deploy"
           command: |
             git config --global user.email "$GITHUB_EMAIL"
             git config --global user.name "$GITHUB_NAME"
+            npm run build
             npm run deploy
       # Notify
       - run:
         when: on_success
         command: >
-          curl -X POST 'https://hooks.slack.com/services/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' -H  'Content-Type: application/json' -d '{"username": "CircleCI","attachments": [{ "color": "#36a64f", "text": "Success"}]}'
+          curl -X POST '$SLACK_API' -H  'Content-Type: application/json' -d '{"username": "CircleCI","attachments": [{ "color": "#36a64f", "text": "Success"}]}'
       - run:
         when: on_fail
         command: >
-          curl -X POST 'https://hooks.slack.com/services/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' -H  'Content-Type: application/json' -d '{"username": "CircleCI","attachments": [{ "color": "#ff0000", "text": "Fail"}]}'
+          curl -X POST '$SLACK_API' -H  'Content-Type: application/json' -d '{"username": "CircleCI","attachments": [{ "color": "#ff0000", "text": "Fail"}]}'
 
 workflows:
   Deploy_to_Github_Page:
     jobs:
       - deploy:
           context:
-            - slack-templates
-            - github
+            - Slack
+            - Github
