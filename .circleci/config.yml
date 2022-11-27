@@ -20,7 +20,7 @@ jobs:
             npm install
             npm run build
             npm run deploy
-      when
+      
       - run:
         name: "Notify"
         command: curl -X POST $SLACK_API
