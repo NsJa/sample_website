@@ -14,22 +14,17 @@ jobs:
             - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
       - checkout
       - node/install-packages
+      # - run: npm run test
+      - run: npm run build
       - run:
+          name: "Deploy"
           command: |
             git config --global user.email "$GITHUB_EMAIL"
             git config --global user.name "$GITHUB_NAME"
-            npm run test
-            npm run build
             npm run deploy
-      - slack/notify:
-          event: fail
-          template: fail_tagged_deploy
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy
 
 workflows:
-  deploy_and_notify:
+  Deploy_to_Github_Page:
     jobs:
       - deploy:
           context:
