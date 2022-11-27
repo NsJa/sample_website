@@ -8,29 +8,13 @@ jobs:
       - image: "cimg/base:stable"
     steps:
       - slack/notify:
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "fields": [
-                    {
-                      "type": "plain_text",
-                      "text": "*This is a text notification*",
-                      "emoji": true
-                    }
-                  ]
-                }
-              ]
-            }
-          event: always
+          event: pass
+          template: success_tagged_test
 workflows:
-  test:
+  test_and_notify:
     jobs:
       - node/test:
           version: "16.10"
           pkg-manager: yarn
-  send-notification:
-    jobs:
       - notify:
-          context: slack-secrets
+          context: slack-templates
