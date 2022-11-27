@@ -14,8 +14,7 @@ jobs:
       - checkout
       - run:
           command: |
-            echo $SLACK_SUCCESS > /tmp/payload.json
-            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw @/tmp/payload.json
+            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw $SLACK_SUCCESS
       # - run:
       #     name: "Deploy"
       #     command: |
