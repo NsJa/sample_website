@@ -14,7 +14,7 @@ jobs:
       - checkout
       - run:
         command: |
-          curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
+          curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
       # - run:
       #     name: "Deploy"
       #     command: |
