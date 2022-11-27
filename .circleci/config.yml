@@ -8,8 +8,9 @@ workflows:
   deploy_and_notify:
     jobs:
       - deploy:
-          context: slack-templates
-          context: github
+          context:
+            - slack-templates
+            - github
 
 jobs:
   deploy:
@@ -18,11 +19,12 @@ jobs:
     steps:
       - checkout
       - node/install-packages
-      - run: npm run test
-      - run: npm run build
-      - run: git config --global user.email "$GITHUB_EMAIL"
-      - run: git config --global user.name "$GITHUB_NAME"
-      - run: npm run deploy
+      - run:
+          - npm run test
+          - npm run build
+          - git config --global user.email "$GITHUB_EMAIL"
+          - git config --global user.name "$GITHUB_NAME"
+          - npm run deploy
       - slack/notify:
           event: pass
           template: success_tagged_deploy
