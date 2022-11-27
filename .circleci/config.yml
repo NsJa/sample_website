@@ -23,12 +23,14 @@ jobs:
       # Notify
       - run:
         when: pass
-        command: >
+        command: |
           curl -X POST $Slack_API -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
+          sleep 1
       - run:
         when: fail
         command: >
           curl -X POST $Slack_API -H "Content-Type: application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
+          sleep 1
 
 workflows:
   Deploy_to_Github_Page:
