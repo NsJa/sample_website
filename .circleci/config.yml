@@ -12,21 +12,21 @@ jobs:
           fingerprints:
             - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
       - checkout
-      - run:
-          name: "Deploy"
-          command: |
-            git config --global user.email "$GITHUB_EMAIL"
-            git config --global user.name "$GITHUB_NAME"
-            npm install
-            npm run build
-            npm run deploy
-
-      - run:
-        name: "Notify"
-        command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
-      - run:
-        name: "Notify"
-        command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_FAIL
+      - run: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
+      # - run:
+      #     name: "Deploy"
+      #     command: |
+      #       git config --global user.email "$GITHUB_EMAIL"
+      #       git config --global user.name "$GITHUB_NAME"
+      #       npm install
+      #       npm run build
+      #       npm run deploy
+      # - run:
+      #   name: "Notify"
+      #   command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_SUCCESS
+      # - run:
+      #   name: "Notify"
+      #   command: curl -X POST "$SLACK_API" -H "Content-Type:application/json" -d $SLACK_FAIL
 
 workflows:
   Deploy_to_Github_Page:
