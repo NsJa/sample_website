@@ -11,13 +11,15 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
-      - checkout
+      # - checkout
       - run:
         command: |
           rm /tmp/something
       - run:
           command: |
             curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
+            - run:
+          when: on_success
       - run:
           command: |
             curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
