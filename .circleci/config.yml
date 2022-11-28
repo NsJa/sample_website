@@ -15,7 +15,6 @@ jobs:
       - run:
           command: |
             curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
-            - run:
           when: on_success
       - run:
           command: |
