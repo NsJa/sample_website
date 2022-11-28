@@ -8,10 +8,6 @@ jobs:
     docker:
       - image: circleci/node
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
-      # - checkout
       - run:
         command: |
           rm /tmp/something
@@ -24,6 +20,11 @@ jobs:
           command: |
             curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
           when: on_fail
+
+      # - add_ssh_keys:
+      #     fingerprints:
+      #       - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
+      # - checkout
       # - run:
       #     name: "Deploy"
       #     command: |
