@@ -8,11 +8,20 @@ jobs:
     docker:
       - image: circleci/node
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
+      - checkout
       - run:
+          name: "Deploy"
           command: |
-            touch /tmp/something
-            rm /tmp/something
-            echo $SLACK_SUCCESS
+            git config --global user.email "$GITHUB_EMAIL"
+            git config --global user.name "$GITHUB_NAME"
+            npm install
+            npm run build
+            npm run deploy
+
+      # Notify
       - run:
           command: |
             curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
@@ -21,19 +30,6 @@ jobs:
           command: |
             curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
           when: on_fail
-
-      # - add_ssh_keys:
-      #     fingerprints:
-      #       - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
-      # - checkout
-      # - run:
-      #     name: "Deploy"
-      #     command: |
-      #       git config --global user.email "$GITHUB_EMAIL"
-      #       git config --global user.name "$GITHUB_NAME"
-      #       npm install
-      #       npm run build
-      #       npm run deploy
 
 workflows:
   Deploy_to_Github_Page:
