@@ -12,23 +12,25 @@ jobs:
           fingerprints:
             - "1a:ec:4b:cc:e1:b2:76:42:f9:8d:a7:1b:1c:b3:b3:d8"
       - checkout
+      - node/install-packages
       - run:
           name: "Deploy"
           command: |
             git config --global user.email "$GITHUB_EMAIL"
             git config --global user.name "$GITHUB_NAME"
-            npm install
             npm run build
             npm run deploy
 
       # Notify
       - run:
+          name: "Success Notify"
           command: |
-            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
+            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"$CIRCLE_JOB Success\"}]}"
           when: on_success
       - run:
+          name: "Fail Notify"
           command: |
-            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
+            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"$CIRCLE_JOB Fail\"}]}"
           when: on_fail
 
 workflows:
