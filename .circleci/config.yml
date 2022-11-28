@@ -9,8 +9,8 @@ jobs:
       - image: circleci/node
     steps:
       - run:
-        command: |
-          rm /tmp/something
+          command: |
+            rm /tmp/something
       - run:
           command: |
             curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
