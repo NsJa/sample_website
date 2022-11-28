@@ -14,11 +14,11 @@ jobs:
             rm /tmp/something
       - run:
           command: |
-            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#36a64f\", \"text\": \"Success\"}]}"
+            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw $SLACK_SUCCESS
           when: on_success
       - run:
           command: |
-            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw "{\"username\": \"CircleCI\",\"attachments\": [{ \"color\": \"#ff0000\", \"text\": \"Fail\"}]}"
+            curl -X POST "$SLACK_API" -H "Content-Type:application/json" --data-raw $SLACK_FAIL
           when: on_fail
 
       # - add_ssh_keys:
