@@ -1,5 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import "./navbar.scss"
 
 const Navbar = () => {
@@ -18,23 +17,18 @@ const Navbar = () => {
       	</div>
         <div className="lineTwo">
 					<div className="item active">
-							<FontAwesomeIcon icon="fa-solid fa-file" />
 							<span >Item 1</span>
 					</div>
 					<div className="item">
-							<FontAwesomeIcon icon="fa-solid fa-file" />
 							<span >Item 2</span>
 					</div>
 					<div className="item">
-							<FontAwesomeIcon icon="fa-solid fa-file" />
 							<span >Item 3</span>
 					</div>
 					<div className="item">
-							<FontAwesomeIcon icon="fa-solid fa-file" />
 							<span >Item 4</span>
 					</div>
 					<div className="item">
-							<FontAwesomeIcon icon="fa-solid fa-file" />
 							<span >Item 5</span>
 					</div>
         </div>
