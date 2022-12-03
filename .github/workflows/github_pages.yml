@@ -1,6 +1,10 @@
 name: sample_website CI/CD
 run-name: sample_website build
-on: [push]
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "github-action"
 jobs:
   build:
     runs-on: self-hosted
@@ -12,22 +16,10 @@ jobs:
           node-version: 16.x
       - run: npm ci
       - run: npm run build
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: github-pages
-          path: build
-          retention-days: 1
-  deployment:
+  report-build-status:
     needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: https://nsja.github.io/sample_website/
     runs-on: self-hosted
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+      - name: Report Build Status
+        run: |
+          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/telemetry" -F github_run_id="$GITHUB_RUN_ID" -F conclusion="$CONCLUSION"
