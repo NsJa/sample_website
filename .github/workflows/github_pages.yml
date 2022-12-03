@@ -1,7 +1,6 @@
 name: sample_website CI/CD
 run-name: sample_website build
 on:
-  workflow_dispatch:
   push:
     branches:
       - "github-action"
@@ -21,5 +20,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Report Build Status
-        run: |
-          gh api -X POST "repos/$GITHUB_REPOSITORY/pages/telemetry" -F github_run_id="$GITHUB_RUN_ID" -F conclusion="$CONCLUSION"
+        run: echo {{ github.action_status }}
